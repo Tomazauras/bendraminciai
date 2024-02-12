@@ -1,0 +1,2 @@
+# bendraminciai
+Bendraminčių klubo projektas.
