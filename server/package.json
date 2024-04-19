@@ -12,7 +12,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.1"
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "connect-firestore": "^0.1.9",
+    "cors": "^2.8.5",
+    "express": "^4.19.1",
+    "express-session": "^1.18.0",
+    "firebase": "^10.9.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
