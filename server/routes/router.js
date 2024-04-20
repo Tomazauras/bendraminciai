@@ -20,6 +20,7 @@ router.route('/loginOpen').post(loginController.open)
 
 router.route('/login').post(loginController.login)
 
-router.route('/checkLoggedIn').get(loginController.isLoggedIn)
+router.route('/logout').post(loginController.logOut)
+
 
 module.exports = router

@@ -12,32 +12,34 @@ class Login extends Component {
             password: ""
         };
     }
-    
-    axiosPostData = async () => {
+
+    axiosPostData() {
         const { email, password } = this.state;
         const postData = {
             email: email,
             password: password
         };
         
-        try {
-          const response = await axios.post('http://localhost:5000/login', postData);
-          if (response.data && response.data.redirectTo) {
-              signInWithCustomToken(auth, response.data.customToken)
-              window.location.href = response.data.redirectTo;
-              
-              console.log("Email and password is correct");
-          } else {
-              
-              this.setState({ message: "**Email or password is incorrect." });
-              console.log("Email or password is incorrect");
-          }
-        } catch (error) {
-          console.error(error);
-        }
-
-       
-    };
+        axios.post('http://localhost:5000/login', postData)
+            .then(response => {
+                if (response.data && response.data.redirectTo) {
+                    signInWithCustomToken(auth, response.data.customToken)
+                        .then(() => {
+                            window.location.href = response.data.redirectTo;
+                        })
+                        .catch(error => {
+                            console.error("Error signing in:", error);
+                        });
+                    console.log("Email and password are correct");
+                } else {
+                    this.setState({ message: "**Email or password is incorrect." });
+                    console.log("Email or password is incorrect");
+                }
+            })
+            .catch(error => {
+                console.error("Error logging in:", error);
+            });
+    }
 
    
 
@@ -47,6 +49,10 @@ class Login extends Component {
 
     handlePasswordChange = (e) => {
         this.setState({ password: e.target.value });
+    };
+
+    handleLogin = () => {
+        this.axiosPostData();
     };
 
     render() {
@@ -81,7 +87,7 @@ class Login extends Component {
                     className="input-field"
                 />
                 </div>
-                <button className="signupClick" onClick={this.axiosPostData}>Log in</button>
+                <button className="signupClick" onClick={this.handleLogin}>Log in</button>
             </div>
         );
     }

@@ -1,17 +1,16 @@
 const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
-const sessionStore = require('./firestore-session-store');
+//const sessionStore = require('./firestore-session-store');
 const router = require('./routes/router');
 const app = express();
 
 const crypto = require('crypto');
 const secretKey = crypto.randomBytes(32).toString('hex');
 app.use(session({
-    secret: secretKey,
-    resave: false,
-    saveUninitialized: false,
-    store: sessionStore
+  secret: secretKey,
+  resave: false,
+  saveUninitialized: true,
 }));
 
 app.use(express.json());
