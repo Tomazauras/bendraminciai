@@ -24,6 +24,7 @@ class Main extends Component {
         super(props);
         this.state = {
           loggedIn: false,
+          loading: true 
         };
       }
 
@@ -32,18 +33,21 @@ class Main extends Component {
         this.checkLoggedIn();
     }
 
-    checkLoggedIn() {
-      
-        axios.get("http://localhost:5000/checkLoggedIn")
-            .then(response => {
-              console.log(response.data);
-                const { loggedIn } = response.data;
-                this.setState({ loggedIn });
-            })
-            .catch(error => {
-                console.error("Error checking login status:", error);
-                console.log("NACHUI");
-            });
+     checkLoggedIn() {
+        // Check Firebase Authentication for user authentication status
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                
+                // User is signed in.
+                this.setState({ loggedIn: true, loading: false });
+                
+            } else {
+                // No user is signed in.
+                this.setState({ loggedIn: false, loading: false });
+            }
+            
+           
+        });
     }
       
 
@@ -82,34 +86,38 @@ class Main extends Component {
   };
 
   handleLogout() {
-    firebase.auth().signOut()
-        .then(() => {
-            // Sign-out successful.
-            console.log('User signed out successfully');
-        })
-        .catch((error) => {
-            // An error happened.
-            console.error('Error signing out:', error);
-        });
+    const data = {
+        uid: firebase.auth().currentUser.uid
+    }
+    axios.post("http://localhost:5000/logout", data)
+    .then(response => {
+      // Redirect to the login page or handle success response
+      
+      window.location.href = response.data.redirectTo; // Redirect to login page
+    })
+    .catch(error => {
+        
+      console.error("Error:", error);
+    });
   };
 
 
 
     render() {
-        const { loggedIn } = this.state;
-
+        const { loggedIn, loading  } = this.state;
+      
         return (
           <div className="background">
             
               <div>
                   <button className="button home" onClick={this.goHome}>Home</button>
                   <div className="buttons">
-                      {!loggedIn && (
+                      {!loggedIn && !loading && (
                           <button className="button login" onClick={this.openUserLoginpWindow}>
                             LogIn
                           </button>
                       )}
-                      {!loggedIn && (
+                      {!loggedIn && !loading && (
                           <button className="button signup" onClick={this.openUserSignUpWindow}>
                             SignUp
                           </button>

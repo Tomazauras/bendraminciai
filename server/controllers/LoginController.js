@@ -19,8 +19,7 @@ class LoginController {
                 const userRecord = await firebaseAdmin.auth().getUserByEmail(email);
                 const customToken = await firebaseAdmin.auth().createCustomToken(userRecord.uid);
 
-                req.session.loggedIn = true;
-                console.log(req.session);
+                
                 res.send({ message: "User log in successfull", redirectTo: "/", customToken });
             }
             else {
@@ -29,20 +28,20 @@ class LoginController {
         } catch (error) {
             console.error(error);
             res.json({ exists: false }); // Return failure response
-            console.log("lel");
         }
     }
 
-    async isLoggedIn(req, res) {
+    async logOut(req, res) {
 
-        console.log("isLoggedIn called");
-        console.log("req.session:", req.session);
-        console.log("req.session.loggedIn:", req.session.loggedIn);
-        if (req.session && req.session.loggedIn) {
-            res.json({ loggedIn: true });
-        } else {
-            res.json({ loggedIn: false });
-        }
+        try {
+            const { uid } = req.body;
+            await firebaseAdmin.auth().revokeRefreshTokens(uid);
+            console.log("User's refresh tokens revoked successfully");
+            res.json({ success: true, redirectTo: "/login" });
+          } catch (error) {
+            console.error("Error revoking refresh tokens:", error);
+            return res.status(500).json({ success: false, error: "Logout failed" });
+          }
     }
 }
 

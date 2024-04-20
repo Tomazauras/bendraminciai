@@ -68,7 +68,9 @@ body {
     background-color: #bae3ee; /* Set your desired background color here */
 }
 
-
+.logout {
+  background-color: #ff1e00; /* Change to your desired login button color */
+}
 .input-field {
     width: 100%;
     padding: 10px;
