@@ -1,4 +1,11 @@
 
+.forUpload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh; /* Set height to 100% of the viewport height */
+  
+}
 
 .container {
     display: flex;
@@ -37,6 +44,19 @@
     background-color: #007bff; /* Change to your desired sign up button color */
   }
 
+  .uploadClick {
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    background-color: #00ff4c; /* Change to your desired sign up button color */
+  }
+
+  .uploadClick:hover {
+    opacity: 0.7;
+  }
+
   .signupClick:hover {
     opacity: 0.7;
   }
@@ -71,6 +91,10 @@ body {
 .logout {
   background-color: #ff1e00; /* Change to your desired login button color */
 }
+
+.upload {
+  background-color: #15ac29;
+}
 .input-field {
     width: 100%;
     padding: 10px;
@@ -97,4 +121,15 @@ body {
 .error-message {
     font-size: 15px;
     color: #b30000;
+}
+
+.post-wrapper {
+  margin-bottom: 20px; /* Add some spacing between posts */
+}
+
+.post {
+  border: 1px solid #1a0e0e; /* Add border around each post */
+  padding: 10px; /* Add padding inside the border */
+  border-radius: 5px; /* Add rounded corners */
+  background-color: #f5f5f5;
 }
