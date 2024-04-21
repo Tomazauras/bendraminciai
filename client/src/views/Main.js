@@ -85,6 +85,17 @@ class Main extends Component {
       });
   };
 
+  openUserUploadWindow() {
+    axios.post("http://localhost:5000/uploadOpen")
+    .then(response => {
+        // Redirect to the signup view URL received from the server
+        window.location.href = response.data.redirectTo;
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
+};
+
   handleLogout() {
     const data = {
         uid: firebase.auth().currentUser.uid
@@ -120,6 +131,11 @@ class Main extends Component {
                       {!loggedIn && !loading && (
                           <button className="button signup" onClick={this.openUserSignUpWindow}>
                             SignUp
+                          </button>
+                      )}
+                      {loggedIn && (
+                          <button className="button upload" onClick={this.openUserUploadWindow}>
+                            Upload
                           </button>
                       )}
                       {loggedIn && (

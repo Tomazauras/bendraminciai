@@ -1,19 +1,23 @@
 const express = require('express');
-const session = require('express-session');
 const cors = require('cors');
-//const sessionStore = require('./firestore-session-store');
+const multer = require('multer');
+const bodyParser = require('body-parser');
 const router = require('./routes/router');
 const app = express();
 
-const crypto = require('crypto');
-const secretKey = crypto.randomBytes(32).toString('hex');
-app.use(session({
-  secret: secretKey,
-  resave: false,
-  saveUninitialized: true,
-}));
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+      return cb(null, 'uploads/') // Specify the destination folder for uploaded images
+  },
+  filename: function (req, file, cb) {
+      return cb(null, Date.now() + '-' + file.originalname) // Use a unique filename for each uploaded image
+  }
+});
+const upload = multer({ storage});
 
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 

@@ -7,6 +7,7 @@ import { getFirestore} from "firebase/firestore";
 import Main from "./views/Main";
 import Home from "./views/Home";
 import Login from "./views/Login";
+import Upload from "./views/Upload";
 import SignUp from "./views/SignUp";
 import { Route, Routes, useParams } from "react-router-dom";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -42,6 +43,7 @@ class App extends Component {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/upload" element={<Upload />} />
           </Routes>
         </div>
       </>
