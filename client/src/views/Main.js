@@ -63,7 +63,7 @@ class Main extends Component {
         });
     };
     
-    openUserSignUpWindow() {
+    openRegisterPage() {
         axios.post("http://localhost:5000/signupOpen")
         .then(response => {
             // Redirect to the signup view URL received from the server
@@ -74,7 +74,7 @@ class Main extends Component {
         });
     };
 
-    openUserLoginpWindow() {
+    openLoginPage() {
       axios.post("http://localhost:5000/loginOpen")
       .then(response => {
           // Redirect to the signup view URL received from the server
@@ -124,12 +124,12 @@ class Main extends Component {
                   <button className="button home" onClick={this.goHome}>Home</button>
                   <div className="buttons">
                       {!loggedIn && !loading && (
-                          <button className="button login" onClick={this.openUserLoginpWindow}>
+                          <button className="button login" onClick={this.openLoginPage}>
                             LogIn
                           </button>
                       )}
                       {!loggedIn && !loading && (
-                          <button className="button signup" onClick={this.openUserSignUpWindow}>
+                          <button className="button signup" onClick={this.openRegisterPage}>
                             SignUp
                           </button>
                       )}
