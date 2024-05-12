@@ -62,6 +62,32 @@ class Post {
             throw error; // Rethrow the error to the caller for proper error handling
         }
     }
+
+    static async getPostById(postId) {
+        try {
+            const docSnapshot = await firebaseAdmin.firestore().collection("posts").doc(postId).get();
+            
+            if (!docSnapshot.exists) {
+                return null; // Return null if the post doesn't exist
+            }
+            
+            const postData = docSnapshot.data();
+            const docImageSnapshot = await firebaseAdmin.firestore().collection("posts_images").doc(postData.urlId).get();
+            
+            if (!docImageSnapshot.exists) {
+                return null; // Return null if the image document doesn't exist
+            }
+            
+            const url = docImageSnapshot.data().url;
+            const imageUrl = await firebaseAdmin.storage().bucket().file(url).getSignedUrl({ action: 'read', expires: '01-01-2025' });
+            
+            return { id: docSnapshot.id, ...postData, imageUrl };
+        } catch (error) {
+            console.error("Error fetching post:", error);
+            throw error; // Rethrow the error to the caller for proper error handling
+        }
+    }
+    
 }
 
 module.exports = Post;

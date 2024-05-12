@@ -65,13 +65,13 @@ class Login extends Component {
         return (
           
             <div className="container">
-              <div className="header">LOG IN</div>
+              <div className="header">Prisijungti</div>
               {message && <div className="error-message"><b>{message}</b></div>} {/* Render the message if it exists */}
                 <div>
                 <input
                     name="email"
                     type="text"
-                    placeholder="Email..."
+                    placeholder="El. paštas"
                     value={email}
                     onChange={this.handleEmailChange}
                     className="input-field"
@@ -80,14 +80,14 @@ class Login extends Component {
                 <div>
                 <input
                     name="password"
-                    placeholder="Password..."
+                    placeholder="Slaptažodis"
                     type="password"
                     value={password}
                     onChange={this.handlePasswordChange}
                     className="input-field"
                 />
                 </div>
-                <button className="signupClick" onClick={this.handleLogin}>Log in</button>
+                <button className="signupClick" onClick={this.handleLogin}>Prisijungti</button>
             </div>
         );
     }

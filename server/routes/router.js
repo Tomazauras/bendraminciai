@@ -33,5 +33,8 @@ router.route('/upload').post(upload.single('image'), uploadController.upload)
 
 router.route('/getPosts').post(postsController.getPosts)
 
+router.route('/post/:postId').get(postsController.getPost)
+
+
 
 module.exports = router

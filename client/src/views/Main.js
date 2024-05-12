@@ -121,26 +121,26 @@ class Main extends Component {
           <div className="background">
             
               <div>
-                  <button className="button home" onClick={this.goHome}>Home</button>
+                  <button className="button home" onClick={this.goHome}>Pradžia</button>
                   <div className="buttons">
                       {!loggedIn && !loading && (
                           <button className="button login" onClick={this.openLoginPage}>
-                            LogIn
+                            Prisijungti
                           </button>
                       )}
                       {!loggedIn && !loading && (
                           <button className="button signup" onClick={this.openRegisterPage}>
-                            SignUp
+                            Registruotis
                           </button>
                       )}
                       {loggedIn && (
                           <button className="button upload" onClick={this.openUserUploadWindow}>
-                            Upload
+                            Įkelti skelbimą
                           </button>
                       )}
                       {loggedIn && (
                           <button className="button logout" onClick={this.handleLogout}>
-                            LogOut
+                            Atsijungti
                           </button>
                       )}
                   </div>

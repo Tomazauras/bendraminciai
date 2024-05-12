@@ -86,13 +86,13 @@ class Upload extends Component {
 
         return (
             <div className="container">
-                <div className="header">UPLOAD PAGE</div>
+                <div className="header">Skelbimo įkėlimas</div>
                 {message && <div className="error-message"><b>{message}</b></div>}
                 <div>
                     <input
                         type="text"
                         name="title"
-                        placeholder="Title..."
+                        placeholder="Pavadinimas"
                         value={title}
                         onChange={this.handleTitleChange}
                         className="input-field"
@@ -103,7 +103,7 @@ class Upload extends Component {
                     <textarea
                         type="text"
                         name="description"
-                        placeholder="Description..."
+                        placeholder="Aprašymas"
                         value={description}
                         onChange={this.handleDescriptionChange}
                         className="input-field"
@@ -114,7 +114,7 @@ class Upload extends Component {
                     <input
                         type="text"
                         name="price"
-                        placeholder="Price..."
+                        placeholder="Kaina"
                         value={price}
                         onChange={this.handlePriceChange}
                         className="input-field"
@@ -129,8 +129,8 @@ class Upload extends Component {
                         className="input-field"
                     />
                 </div>
-                {uploading && <div><b>Uploading...</b></div>}
-                <button className="uploadClick" onClick={this.handleUpload}>Save</button>
+                {uploading && <div><b>Įkeliama...</b></div>}
+                <button className="uploadClick" onClick={this.handleUpload}>Išsaugoti</button>
 
             </div>
         );

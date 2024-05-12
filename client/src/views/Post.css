@@ -1,0 +1,31 @@
+
+  .reservation-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .reservation-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .post {
+    border: 1px solid #1a0e0e; /* Add border around each post */
+    padding: 10px; /* Add padding inside the border */
+    border-radius: 5px; /* Add rounded corners */
+    background-color: #f5f5f5;
+    text-align: center;
+    max-height: 600px;
+    min-height: 600px;
+  }
+
+  .post img {
+    width: 100%; /* Ensure the image takes up the full width of its container */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 100%; /* Ensure the image doesn't exceed its container's width */
+    max-height: 400px; /* Set a maximum height for consistency */
+    min-height: 400px;
+  }

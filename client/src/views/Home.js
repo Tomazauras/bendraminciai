@@ -26,15 +26,15 @@ class Home extends Component {
         const { posts } = this.state;
         return (
             <div className="container">
-                <div className="header">HOME PAGE</div>
+                <div className="header">Nuomos klubas</div>
                 <div className="post-list">
                     {posts.map(post => (
                         <Link to={`/post/${post.id}`} key={post.id}>
                             <div className="post-wrapper"> {/* New div to wrap each post */}
-                                <div className="post"> {/* Add a border around each post */}
+                                <div className="posts"> {/* Add a border around each post */}
                                     <h3>{post.title}</h3>
                                     <img src={post.imageUrl} alt="Post Image" style={{ maxWidth: "50%", maxHeight: "auto" }}/>
-                                    <p>Price: {post.price}</p>
+                                    <p>Kaina: {post.price}</p>
                                 </div>
                             </div>
                         </Link>

@@ -88,13 +88,13 @@ class SignUp extends Component {
 
         return (
             <div className="container">
-                <div className="header">SIGN UP</div>
+                <div className="header">Registracija</div>
                 {message && <div className="error-message"><b>{message}</b></div>} {/* Render the message if it exists */}
                 <div>
                     <input
                         type="text"
                         name="name"
-                        placeholder="Name"
+                        placeholder="Vardas"
                         value={name}
                         onChange={this.handleInputChange}
                         className="input-field"
@@ -104,7 +104,7 @@ class SignUp extends Component {
                     <input
                         type="text"
                         name="surname"
-                        placeholder="Surname"
+                        placeholder="Pavardė"
                         value={surname}
                         onChange={this.handleInputChange}
                         className="input-field"
@@ -114,7 +114,7 @@ class SignUp extends Component {
                     <input
                         type="text"
                         name="personalCode"
-                        placeholder="Personal code"
+                        placeholder="Asmens kodas"
                         value={personalCode}
                         onChange={this.handleInputChange}
                         className="input-field"
@@ -124,7 +124,7 @@ class SignUp extends Component {
                     <input
                         type="text"
                         name="phoneNumber"
-                        placeholder="Phone number"
+                        placeholder="Telefono numeris"
                         value={phoneNumber}
                         onChange={this.handleInputChange}
                         className="input-field"
@@ -134,7 +134,7 @@ class SignUp extends Component {
                     <input
                         type="email"
                         name="email"
-                        placeholder="Email"
+                        placeholder="El. paštas"
                         value={email}
                         onChange={this.handleInputChange}
                         className="input-field"
@@ -144,7 +144,7 @@ class SignUp extends Component {
                     <input
                         type="password"
                         name="password"
-                        placeholder="Password"
+                        placeholder="Slaptažodis"
                         value={password}
                         onChange={this.handleInputChange}
                         className="input-field"
@@ -154,7 +154,7 @@ class SignUp extends Component {
                     <input
                         type="password"
                         name="confirmPassword"
-                        placeholder="Confirm Password"
+                        placeholder="Patvirtinti slaptažodį"
                         value={confirmPassword}
                         onChange={this.handleInputChange}
                         className="input-field"

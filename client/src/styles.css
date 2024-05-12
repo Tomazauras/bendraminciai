@@ -127,9 +127,23 @@ body {
   margin-bottom: 20px; /* Add some spacing between posts */
 }
 
-.post {
+.posts {
   border: 1px solid #1a0e0e; /* Add border around each post */
   padding: 10px; /* Add padding inside the border */
   border-radius: 5px; /* Add rounded corners */
   background-color: #f5f5f5;
+  text-align: center;
+}
+
+.post-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Display three columns */
+  gap: 20px; /* Add some gap between columns */
+}
+
+.posts img {
+  width: 100%; /* Ensure the image takes up the full width of its container */
+  height: auto; /* Maintain aspect ratio */
+  max-width: 100%; /* Ensure the image doesn't exceed its container's width */
+
 }
