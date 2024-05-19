@@ -4,7 +4,6 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import Modal from "react-modal";
 import "react-datepicker/dist/react-datepicker.css";
-import "./Post.css";
 import "../Post.css";
 
 // Set the app element for accessibility

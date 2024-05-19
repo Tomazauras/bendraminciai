@@ -4,13 +4,13 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore} from "firebase/firestore";
-import Main from "./views/Main";
-import Home from "./views/Home";
-import Login from "./views/Login";
-import Upload from "./views/Upload";
-import SignUp from "./views/SignUp";
-import Post from "./views/Post";
-import User from "./views/User"
+import Main from "./views/Users subsystem/Main";
+import Home from "./views/Posts search management subsystem/Home";
+import Login from "./views/Users subsystem/Login";
+import Upload from "./views/Posts management subsystem/Upload";
+import SignUp from "./views/Users subsystem/SignUp";
+import Post from "./views/Posts search management subsystem/Post";
+import User from "./views/Users subsystem/User"
 import CategoryList from "./views/Administration subsystem/CategoryList";
 import CategoryView from "./views/Posts search management subsystem/Categorys";
 import PostsByCategory from "./views/Posts search management subsystem/PostsByCategory";
