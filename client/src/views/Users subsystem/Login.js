@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { signInWithCustomToken } from "firebase/auth";
-import { auth } from "../App";
-import "../styles.css"; // Import the CSS file
+import { auth } from "../../App";
+import "../../styles.css"; 
 
 class Login extends Component {
     constructor(props) {

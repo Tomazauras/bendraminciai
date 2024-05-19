@@ -1,7 +1,7 @@
-const firebaseAdmin = require("../config/firebase-config");
+const firebaseAdmin = require("../../config/firebase-config");
 const admin = require("firebase-admin");
 const multer = require("multer");
-const Post = require("../models/Post");
+const Post = require("../../models/Post");
 
 class UploadController {
     async navigateToUpload(req, res) {
@@ -10,13 +10,14 @@ class UploadController {
 
     async upload(req, res) {
 
-        const { title, price, description } = req.body;
+        const { title, price, description, categoryId } = req.body;
 
         const image = req.file ? req.file : null;
         console.log("Title:", title);
         console.log("Description:", description);
         console.log("Price:", price);
         console.log("Image:", image);
+        console.log("Kategorija:",categoryId);
 
         try {
             if (!title.trim()) {
@@ -32,6 +33,9 @@ class UploadController {
 
                 res.send({ message: 4 });
 
+            } else if (categoryId == "null") {
+                res.send({ message: 5 });
+
             } else {
                 const url = await Post.addImageToStorage(image);      
 
@@ -42,7 +46,8 @@ class UploadController {
                     price, 
                     description,
                     state: "active",
-                    urlId
+                    urlId,
+                    categoryId
                 };
 
                 const postId = await Post.addPost(userData); 

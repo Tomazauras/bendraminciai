@@ -1,5 +1,5 @@
-const firebaseAdmin = require("../config/firebase-config");
-const Post = require("../models/Post");
+const firebaseAdmin = require("../../config/firebase-config");
+const Post = require("../../models/Post");
 
 class PostController {
     async open(req, res) {
@@ -36,6 +36,23 @@ class PostController {
         }
     }
 
+    async getPostsById(req, res) {
+        const categoryId = req.params.categoryId;
+        try {
+            
+            const { categoryName, posts } = await Post.getPostsById(categoryId);
+            if (posts == ""){
+
+                res.send({ message: "There are no posts of this category", categoryName});
+            }
+            
+            res.json({ categoryName, posts });
+            
+
+        } catch (error) {
+            
+        }
+    }
 }
 
 module.exports = PostController;

@@ -4,7 +4,7 @@ import "firebase/compat/auth";
 import "firebase/compat/storage";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "../styles.css"; // Import the CSS file
+import "../../styles.css"; 
 
 const firebaseConfig = {
     apiKey: "AIzaSyBSc1GHLesciWBHF_-SOXj5vjE5QANY8fI",
@@ -90,6 +90,28 @@ class Main extends Component {
             console.error("Error:", error);
         });
     }
+  openCategoryList() {
+    axios.post("http://localhost:5000/openCategorys")
+    .then(response => {
+        
+        window.location.href = response.data.redirectTo;
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+  };
+
+  showCategoryList() {
+    axios.post("http://localhost:5000/openCategorysList")
+    .then(response => {
+        
+        window.location.href = response.data.redirectTo;
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+  };
+
 
     handleLogout() {
         const data = {
@@ -106,42 +128,53 @@ class Main extends Component {
     }
 
     render() {
-        const { loggedIn, loading } = this.state;
-
+        const { loggedIn, loading  } = this.state;
+      
         return (
-            <div className="background">
-                <div>
-                    <button className="button home" onClick={this.goHome}>Pradžia</button>
-                    <div className="buttons">
-                        {!loggedIn && !loading && (
-                            <button className="button login" onClick={this.openLoginPage}>
-                                Prisijungti
-                            </button>
-                        )}
-                        {!loggedIn && !loading && (
-                            <button className="button signup" onClick={this.openRegisterPage}>
-                                Registruotis
-                            </button>
-                        )}
-                        {loggedIn && (
+          <div className="background">
+            
+              <div>
+                  <button className="button home" onClick={this.goHome}>Pradžia</button>
+                  <div className="buttons">
+                          <button className="button login" onClick={this.openCategoryList}>
+                            Kurti kategorijas
+                          </button>
+                          <button className="button login" onClick={this.showCategoryList}>
+                            Rodyti kategorijas
+                          </button>
+                      {!loggedIn && !loading && (
+                          <button className="button login" onClick={this.openLoginPage}>
+                            Prisijungti
+                          </button>
+                      )}
+                      {!loggedIn && !loading && (
+                          <button className="button signup" onClick={this.openRegisterPage}>
+                            Registruotis
+                          </button>
+                      )}
+                      {loggedIn && (
                             <>
                                 <Link to="/profile">
                                     <button className="button profile">
                                         Profile
                                     </button>
                                 </Link>
-                                <button className="button upload" onClick={this.openUserUploadWindow}>
-                                    Įkelti skelbimą
-                                </button>
-                                <button className="button logout" onClick={this.handleLogout}>
-                                    Atsijungti
-                                </button>
                             </>
                         )}
-                    </div>
-                </div>
-            </div>
-        );
+                      {loggedIn && (
+                          <button className="button upload" onClick={this.openUserUploadWindow}>
+                            Įkelti skelbimą
+                          </button>
+                      )}
+                      {loggedIn && (
+                          <button className="button logout" onClick={this.handleLogout}>
+                            Atsijungti
+                          </button>
+                      )}
+                  </div>
+              </div>
+              </div>
+              );
     }
 }
 

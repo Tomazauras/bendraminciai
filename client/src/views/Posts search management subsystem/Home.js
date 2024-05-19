@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { auth } from "../App";
+import { auth } from "../../App";
 import axios from "axios";
-import "../styles.css"; // Import the CSS file
+import "../../styles.css"; // Import the CSS file
 class Home extends Component {
 
     constructor(props) {
