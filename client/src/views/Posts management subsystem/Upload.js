@@ -1,26 +1,34 @@
 import React, { Component } from "react";
-import "../styles.css"; // Import the CSS file
+import "../../styles.css"; 
 import axios from "axios";
 
 class Upload extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            allData: [],
             title: "",
             price: "",
             description: "",
             image: null,
-            uploading: false
+            uploading: false,
+            categoryId: null
         };
     }
 
+    componentDidMount() {
+        // Fetch existing categories when the component mounts
+        this.showCategoryList();
+    }
+
     startUpload() {
-        const { title, price, description, image } = this.state;
+        const { allData, title, price, description, image, uploading, categoryId } = this.state;
 
         const formData = new FormData();
         formData.append("title", title);
         formData.append("price", price);
         formData.append("description", description);
+        formData.append("categoryId", categoryId); 
         formData.append("image", image); 
         this.setState({ uploading: true });
 
@@ -42,6 +50,8 @@ class Upload extends Component {
             }
             else if (response.data.message == 4) {
                 this.setState({ message: "**No image selected or it's size is incorrect." });
+            } else if (response.data.message == 5) {
+                this.setState({ message: "**No category selected" });
             }
             
           })
@@ -75,13 +85,32 @@ class Upload extends Component {
         
     };
 
+    showCategoryList() {
+        axios.post("http://localhost:5000/fetchCategorys")
+            .then(response => {
+                const allData = response.data.AllData;
+                this.setState({ allData });
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+    handleCategorySelect = event => {
+        const categoryId = event.target.value === "" ? null : event.target.value;
+        
+        this.setState({ categoryId });
+    };
+
     render() {
         const {
+            allData,
             title,
             price,
             description,
             message,
-            uploading
+            uploading,
+            categoryId
           } = this.state;
 
         return (
@@ -120,7 +149,13 @@ class Upload extends Component {
                         className="input-field"
                     />
                 </div>
-
+                <label>Kategorija:</label>
+                <select onChange={this.handleCategorySelect}>
+                            <option value="">-</option>
+                            {allData.map(category => (
+                                <option key={category.id} value={category.id}>{category.pavadinimas}</option>
+                            ))}
+                </select>
                 <div>
                     <input
                         type="file"

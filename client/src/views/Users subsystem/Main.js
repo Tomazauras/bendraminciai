@@ -4,7 +4,7 @@ import "firebase/compat/auth";
 import "firebase/compat/storage";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "../styles.css"; // Import the CSS file
+import "../../styles.css"; 
 
 const firebaseConfig = {
     apiKey: "AIzaSyBSc1GHLesciWBHF_-SOXj5vjE5QANY8fI",
@@ -112,6 +112,28 @@ class Main extends Component {
     });
   };
 
+  openCategoryList() {
+    axios.post("http://localhost:5000/openCategorys")
+    .then(response => {
+        
+        window.location.href = response.data.redirectTo;
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+  };
+
+  showCategoryList() {
+    axios.post("http://localhost:5000/openCategorysList")
+    .then(response => {
+        
+        window.location.href = response.data.redirectTo;
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+  };
+
 
 
     render() {
@@ -123,6 +145,12 @@ class Main extends Component {
               <div>
                   <button className="button home" onClick={this.goHome}>Pradžia</button>
                   <div className="buttons">
+                          <button className="button login" onClick={this.openCategoryList}>
+                            Kurti kategorijas
+                          </button>
+                          <button className="button login" onClick={this.showCategoryList}>
+                            Rodyti kategorijas
+                          </button>
                       {!loggedIn && !loading && (
                           <button className="button login" onClick={this.openLoginPage}>
                             Prisijungti

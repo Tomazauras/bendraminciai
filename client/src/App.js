@@ -4,13 +4,17 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore} from "firebase/firestore";
-import Main from "./views/Main";
-import Home from "./views/Home";
-import Login from "./views/Login";
-import Upload from "./views/Upload";
-import SignUp from "./views/SignUp";
-import Post from "./views/Post";
+import Main from "./views/Users subsystem/Main";
+import Home from "./views/Posts search management subsystem/Home";
+import Login from "./views/Users subsystem/Login";
+import Upload from "./views/Posts management subsystem/Upload";
+import SignUp from "./views/Users subsystem/SignUp";
+import Post from "./views/Posts search management subsystem/Post";
+import CategoryList from "./views/Administration subsystem/CategoryList";
+import CategoryView from "./views/Posts search management subsystem/Categorys";
+import PostsByCategory from "./views/Posts search management subsystem/PostsByCategory";
 import { Route, Routes, useParams } from "react-router-dom";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -31,7 +35,6 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-
 class App extends Component {
   render() {
     return (
@@ -46,6 +49,9 @@ class App extends Component {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/post/:postId" element={<Post />} />
+            <Route path="/categorys" element={<CategoryList />} />
+            <Route path="/categorysList" element={<CategoryView />} />
+            <Route path="/category/:categoryId" element={<PostsByCategory />} />
           </Routes>
         </div>
       </>

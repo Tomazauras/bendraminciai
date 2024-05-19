@@ -7,7 +7,8 @@ class Post {
                 description,
                 price,
                 state,
-                urlId
+                urlId,
+                categoryId
                 } = userData;
                 const postId = firebaseAdmin.firestore().collection("posts").doc().id;
 
@@ -16,7 +17,8 @@ class Post {
                     description,
                     price,
                     state,
-                    urlId
+                    urlId,
+                    categoryId
                 });
                 
                 return postId;
@@ -87,6 +89,39 @@ class Post {
             throw error; // Rethrow the error to the caller for proper error handling
         }
     }
+
+    static async getPostsById(categoryId) {
+        try {
+
+            
+
+            const categorySnapshot = await firebaseAdmin.firestore().collection("categorys")
+            .doc(categoryId)
+            .get();
+
+            const categoryName = categorySnapshot.data().pavadinimas;
+
+            const snapshot = await firebaseAdmin.firestore().collection("posts")
+                .where("categoryId", "==", categoryId) // Replace 'specificCategoryId' with the ID you want to filter by
+                .get();
+        
+            const posts = await Promise.all(snapshot.docs.map(async doc => {
+                const postData = doc.data();
+                const docSnapshot = await firebaseAdmin.firestore().collection("posts_images").doc(postData.urlId).get(); 
+                const url = docSnapshot.data().url; // Assuming 'url' is the field containing the storage file URL
+                const imageUrl = await firebaseAdmin.storage().bucket().file(url).getSignedUrl({ action: 'read', expires: '01-01-2025' });
+                return { id: doc.id, ...postData, imageUrl };
+            }));
+            
+            return { categoryName, posts };
+        } catch (error) {
+           
+        }
+    }
+
+    
+    
+    
     
 }
 

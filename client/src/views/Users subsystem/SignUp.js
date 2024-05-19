@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import "../styles.css"; // Import the CSS file
+import "../../styles.css"; 
 
 class SignUp extends Component {
     constructor(props) {

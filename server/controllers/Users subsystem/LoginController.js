@@ -1,5 +1,5 @@
-const firebaseAdmin = require("../config/firebase-config");
-const User = require("../models/User");
+const firebaseAdmin = require("../../config/firebase-config");
+const User = require("../../models/User");
 
 class LoginController {
     async open(req, res) {
