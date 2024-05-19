@@ -12,7 +12,8 @@ class Upload extends Component {
             description: "",
             image: null,
             uploading: false,
-            categoryId: null
+            categoryId: null,
+            deepestCategories: []
         };
     }
 
@@ -89,11 +90,32 @@ class Upload extends Component {
         axios.post("http://localhost:5000/fetchCategorys")
             .then(response => {
                 const allData = response.data.AllData;
-                this.setState({ allData });
+                const deepestCategories = this.getDeepestCategories(allData);
+                this.setState({ allData, deepestCategories });
             })
             .catch(error => {
                 console.error("Error:", error);
             });
+    }
+
+    renderCategoryHierarchy(categoryId, allData) {
+        const category = allData.find(cat => cat.id === categoryId);
+        if (!category) return null;
+
+        const parentHierarchy = this.renderCategoryHierarchy(category.tevoId, allData);
+
+        return (
+            <div key={category.id}>
+                {parentHierarchy}
+                {parentHierarchy && " > "}
+                {category.pavadinimas}
+            </div>
+        );
+    }
+
+    getDeepestCategories(categories) {
+        const parentIds = new Set(categories.map(category => category.tevoId));
+        return categories.filter(category => !parentIds.has(category.id));
     }
 
     handleCategorySelect = event => {
@@ -110,7 +132,8 @@ class Upload extends Component {
             description,
             message,
             uploading,
-            categoryId
+            categoryId,
+            deepestCategories
           } = this.state;
 
         return (
@@ -151,10 +174,12 @@ class Upload extends Component {
                 </div>
                 <label>Kategorija:</label>
                 <select onChange={this.handleCategorySelect}>
-                            <option value="">-</option>
-                            {allData.map(category => (
-                                <option key={category.id} value={category.id}>{category.pavadinimas}</option>
-                            ))}
+                    <option value="">-</option>
+                    {deepestCategories.map(category => (
+                        <option key={category.id} value={category.id}>
+                            {this.renderCategoryHierarchy(category.id, allData)}
+                        </option>
+                    ))}
                 </select>
                 <div>
                     <input

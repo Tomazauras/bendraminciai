@@ -79,7 +79,7 @@ class User {
                 }
             } else {
                 
-                return false;   
+                return false;
             }
         } catch (error) {
             // Handle errors
@@ -88,19 +88,15 @@ class User {
         }
     }
 
-    static async getUserById(userId) {
+    static async getType (uid){
         try {
-            const docSnapshot = await firebaseAdmin.firestore().collection("users").doc(userId).get();
-            
-            if (!docSnapshot.exists) {
-                return null;
-            }
-
-            return { id: docSnapshot.id, ...docSnapshot.data() };
+            const userData = await firebaseAdmin.firestore().collection("users").doc(uid).get();
+            const type = userData.data().userType;
+            return type;
         } catch (error) {
-            console.error("Error fetching reservation:", error);
-            throw error;
+
         }
+
     }
 
     static async appendCredits(userId, amount) {

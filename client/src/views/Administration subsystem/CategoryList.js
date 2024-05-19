@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import "../../App-styles.css";
 import { reload } from "firebase/auth";
-
+import firebase from "firebase/compat/app";
 class CategoryList extends Component {
     constructor(props) {
         super(props);
@@ -11,11 +11,39 @@ class CategoryList extends Component {
             loading: true,
             newCategoryName: "",
             selectedParentId: null,
-            deleteCategory: null
+            deleteCategory: null,
+            curentUserType: null
         };
     }
 
+    checkLoggedIn() {
+        // Check Firebase Authentication for user authentication status
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                const userId = firebase.auth().currentUser.uid;
+                this.getCurrentUserType(userId);
+                // User is signed in.
+                
+                
+            }
+            
+           
+        });
+    }
+
+    getCurrentUserType(uid) {
+        axios.post("http://localhost:5000/userType", { id: uid })
+          .then(response => {
+            const curentUserType = response.data.Alldata;
+            this.setState({ curentUserType });
+          })
+          .catch(error => {
+            console.error("Error:", error);
+          });
+      }
+
     componentDidMount() {
+        this.checkLoggedIn();
         // Fetch existing categories when the component mounts
         this.showCategoryList();
     }
@@ -130,13 +158,14 @@ class CategoryList extends Component {
     
 
     render() {
-        const { allData, loading, newCategoryName, selectedParentId, message, deleteCategory } = this.state;
+        const { allData, loading, newCategoryName, selectedParentId, message, deleteCategory, curentUserType } = this.state;
     
         if (loading) {
             return <div>Loading...</div>; // Render a loading indicator while loading is true
         }
     
         return (
+            curentUserType == "admin" && (
             <div className="App">
                 {message && <div className="error-message"><b>{message}</b></div>} {/* Render the message if it exists */}
                 <div className="header">Kategorijų kūrimas</div>
@@ -184,6 +213,7 @@ class CategoryList extends Component {
                     </ul>
                 </div>
             </div>
+                            )
         );
     }
     

@@ -15,7 +15,7 @@ const PostsController = require('../controllers/Posts search management subsyste
 const postsController = new PostsController();
 const ReservationController = require('../controllers/ReservationController');
 const reservationController = new ReservationController();
-const UserController = require('../controllers/UserController');
+const UserController = require('../controllers/Users subsystem/UserController');
 const userController = new UserController();
 const CategoryController = require('../controllers/Administration subsystem/CategoryController')
 const categoryController = new CategoryController();
@@ -62,5 +62,7 @@ router.route('/user/:userId').get(userController.getUserById)
 router.route('/user/:userId/creditsAdd').post(userController.appendCredits)
 
 router.route('/user/:userId/creditsSubtract').post(userController.subtractCredits)
+
+router.route('/userType').post(userController.getUserType)
 
 module.exports = router

@@ -31,16 +31,24 @@ class Categorys extends Component {
     renderCategories = (categories, tevoId = null) => {
         return categories
             .filter(category => category.tevoId === tevoId)
-            .map(category => (
-                <li key={category.id}>
-                    <Link to={`/category/${category.id}`}>{category.pavadinimas}</Link> {/* Wrap with Link */}
-                    <ul>
-                        {this.renderCategories(categories, category.id)}
-                    </ul>
-                </li>
-            ));
+            .map(category => {
+                const hasChildren = categories.some(child => child.tevoId === category.id);
+                return (
+                    <li key={category.id}>
+                        {hasChildren ? (
+                            category.pavadinimas
+                        ) : (
+                            <Link to={`/category/${category.id}`}>{category.pavadinimas}</Link>
+                        )}
+                        {hasChildren && (
+                            <ul>
+                                {this.renderCategories(categories, category.id)}
+                            </ul>
+                        )}
+                    </li>
+                );
+            });
     };
-
     render() {
         const { allData, loading } = this.state;
 
