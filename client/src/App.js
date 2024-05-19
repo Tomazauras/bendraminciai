@@ -10,6 +10,7 @@ import Login from "./views/Login";
 import Upload from "./views/Upload";
 import SignUp from "./views/SignUp";
 import Post from "./views/Post";
+import User from "./views/User"
 import { Route, Routes, useParams } from "react-router-dom";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -46,6 +47,7 @@ class App extends Component {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/post/:postId" element={<Post />} />
+            <Route path="/profile" element={<User />} />
           </Routes>
         </div>
       </>

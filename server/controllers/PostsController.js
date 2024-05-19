@@ -10,7 +10,6 @@ class PostController {
         this.getPosts = this.getPosts.bind(this); // Bind getPosts method to the class instance
     }
     async getPosts(req, res){
-        console.log("VISI POSTAI");
         try {
             const allPosts = await Post.getAllPosts();
 
@@ -22,7 +21,6 @@ class PostController {
     }
 
     async getPost(req, res) {
-        console.log("Fetchinam");
         const postId = req.params.postId;
         try {
             const post = await Post.getPostById(postId); // Implement this method in your Post model

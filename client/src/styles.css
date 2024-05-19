@@ -92,6 +92,11 @@ body {
   background-color: #ff1e00; /* Change to your desired login button color */
 }
 
+.profile {
+  background-color: #007bff;
+}
+
+
 .upload {
   background-color: #15ac29;
 }

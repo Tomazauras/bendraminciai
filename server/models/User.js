@@ -79,12 +79,27 @@ class User {
                 }
             } else {
                 
-                return false;
+                return false;   
             }
         } catch (error) {
             // Handle errors
             console.error("Error checking user:", error);
             return false;
+        }
+    }
+
+    static async getUserById(userId) {
+        try {
+            const docSnapshot = await firebaseAdmin.firestore().collection("users").doc(userId).get();
+            
+            if (!docSnapshot.exists) {
+                return null;
+            }
+
+            return { id: docSnapshot.id, ...docSnapshot.data() };
+        } catch (error) {
+            console.error("Error fetching reservation:", error);
+            throw error;
         }
     }
 }

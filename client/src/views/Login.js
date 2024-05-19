@@ -25,6 +25,7 @@ class Login extends Component {
                 if (response.data && response.data.redirectTo) {
                     signInWithCustomToken(auth, response.data.customToken)
                         .then(() => {
+                            localStorage.setItem('userId', response.data.userId)
                             window.location.href = response.data.redirectTo;
                         })
                         .catch(error => {

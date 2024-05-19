@@ -13,7 +13,10 @@ const UploadController = require('../controllers/UploadController')
 const uploadController = new UploadController();
 const PostsController = require('../controllers/PostsController')
 const postsController = new PostsController();
-
+const ReservationController = require('../controllers/ReservationController');
+const reservationController = new ReservationController();
+const UserController = require('../controllers/UserController');
+const userController = new UserController();
 
 router.route('/signupOpen').post(signUpController.open)
 
@@ -35,6 +38,10 @@ router.route('/getPosts').post(postsController.getPosts)
 
 router.route('/post/:postId').get(postsController.getPost)
 
+router.route('/reserve').post(reservationController.addReservation);
 
+router.route('/reservations/post/:postId').get(reservationController.getReservationsByPostId);
+
+router.route('/user/:userId').get(userController.getUserById)
 
 module.exports = router
