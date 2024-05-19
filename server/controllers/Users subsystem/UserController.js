@@ -1,4 +1,5 @@
-const User = require('../models/User');
+const User = require('../../models/User');
+const firebaseAdmin = require("../../config/firebase-config");
 
 class UserController {
     async getUserById(req, res) {
@@ -10,6 +11,17 @@ class UserController {
             res.status(500).json({ success: false, error: error.message });
         }
     }
-}
+
+    async getUserType (req, res) {
+        try {
+            const { id } = req.body; 
+            const type = await User.getType(id);
+            console.log(type);
+            res.send({ Alldata: type});
+        } catch (error) {
+
+        }
+    }
+}  
 
 module.exports = UserController;
