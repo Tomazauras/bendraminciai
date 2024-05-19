@@ -17,6 +17,7 @@ const Post = () => {
     const [endDate, setEndDate] = useState(null);
     const [reservedDates, setReservedDates] = useState([]);
     const [error, setError] = useState("");
+    
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -62,22 +63,39 @@ const Post = () => {
     };
 
     const handleSelect = async () => {
-        // Check if any selected date overlaps with reserved dates
+        if (!startDate || !endDate) {
+            setError("Pasirinkite pradžios ir pabaigos datas.");
+            return;
+        }
+    
+        const numberOfDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+    
+        const totalPrice = parseFloat(post.price) * numberOfDays;
+    
         const overlap = reservedDates.some((reservedDate) => {
             const reservedStart = new Date(reservedDate.startDate._seconds * 1000);
             const reservedEnd = new Date(reservedDate.endDate._seconds * 1000);
             return startDate <= reservedEnd && endDate >= reservedStart;
         });
-
+    
         if (overlap) {
             setError("Pasirinktos datos yra užimtos. Pakeiskite pasirinkimą");
         } else {
             try {
+                const userId = localStorage.getItem('userId');
+    
+                try {
+                    await axios.post(`http://localhost:5000/user/${userId}/creditsSubtract`, { amount: totalPrice });
+                } catch (error) {
+                    console.error("Error subtracting credits:", error);
+                    return;
+                }
+    
                 const response = await axios.post('http://localhost:5000/reserve', {
                     startDate,
                     endDate,
-                    reservedCredits: post.price, // Example reserved credits value
-                    fk_userID: "userID_example", // Replace with actual user ID
+                    reservedCredits: totalPrice, // Use the calculated total price
+                    fk_userID: userId,
                     fk_postID: postId
                 });
                 console.log("Reservation successful:", response.data);
@@ -87,6 +105,8 @@ const Post = () => {
             }
         }
     };
+    
+    
 
     return (
         <div className="container">

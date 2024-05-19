@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const User = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [creditAmount, setCreditAmount] = useState(100); // Default amount to append
 
     useEffect(() => {
         const userId = localStorage.getItem('userId');
@@ -23,21 +23,35 @@ const User = () => {
         fetchUser();
     }, []);
 
+    const handleAppendCredits = async () => {
+        const userId = localStorage.getItem('userId');
+
+        try {
+            const response = await axios.post(`http://localhost:5000/user/${userId}/creditsAdd`, { amount: creditAmount });
+            setUser(prevUser => ({ ...prevUser, credits: response.data.updatedCredits }));
+        } catch (error) {
+            console.error("Error appending credits:", error);
+        }
+    };
+
     if (loading) {
-        return <div>Loading...</div>;
+        return <div>Kraunama...</div>;
     }
 
     if (!user) {
-        return <div>Error loading user data.</div>;
+        return <div>Klaida kraunant vartotojo duomenis.</div>;
     }
 
     return (
         <div>
-            <h1>User Profile</h1>
-            <p><strong>Credits:</strong> {user.credits}</p>
-            <p><strong>Email:</strong> {user.email}</p>
-            <p><strong>Name:</strong> {user.name}</p>
-            <p><strong>Phone Number:</strong> {user.phoneNumber}</p>
+            <h1>Vartotojo profilis</h1>
+            <p><strong>Kreditai:</strong> {user.credits}</p>
+            <p><strong>El. paštas:</strong> {user.email}</p>
+            <p><strong>Vardas:</strong> {user.name}</p>
+            <p><strong>Telefono numeris:</strong> {user.phoneNumber}</p>
+            <div>
+                <button onClick={handleAppendCredits}>Pridėti kreditų</button>
+            </div>
         </div>
     );
 };

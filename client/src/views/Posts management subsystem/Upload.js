@@ -141,7 +141,7 @@ class Upload extends Component {
 
                 <div>
                     <input
-                        type="text"
+                        type="number"
                         name="price"
                         placeholder="Kaina"
                         value={price}
