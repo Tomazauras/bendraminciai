@@ -107,7 +107,7 @@ const Post = () => {
     } else {
       try {
         const userId = localStorage.getItem("userId");
-        console.log(userId);
+        console.log("dasdasd", userId);
 
         try {
           await axios.post(
@@ -136,6 +136,7 @@ const Post = () => {
   };
 
   return (
+
     <div className="container">
       <div className="post-details">
         {post ? (
@@ -164,9 +165,11 @@ const Post = () => {
                 <p>Kraunama autoriaus informacija..</p>
               )}
             </div>
+            {post.fk_userID != localStorage.getItem("userId") && (
             <button className="reservation-button" onClick={openCalendar}>
               Rezervuoti
             </button>
+            )}
           </div>
         ) : (
           <p>Kraunama..</p>
