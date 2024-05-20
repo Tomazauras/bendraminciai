@@ -4,6 +4,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/storage";
 import { Link } from "react-router-dom";
+import "../../styles.css"; // Import the CSS file
 
 const firebaseConfig = {
   apiKey: "AIzaSyBSc1GHLesciWBHF_-SOXj5vjE5QANY8fI",
@@ -152,6 +153,7 @@ const User = () => {
                     padding: "10px",
                     textAlign: "center",
                   }}
+                  className="posts"
                 >
                   <h3>{post.title}</h3>
                   <img
