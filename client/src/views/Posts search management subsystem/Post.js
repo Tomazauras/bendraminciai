@@ -69,12 +69,14 @@ const Post = () => {
   const openCalendar = () => {
     console.log("Open modal");
     setShowModal(true);
+    
   };
 
   const closeModal = () => {
     console.log("Close modal");
     setShowModal(false);
     setError("");
+  
   };
 
   const handleDateChange = (dates) => {
@@ -126,6 +128,7 @@ const Post = () => {
         });
         console.log("Reservation successful:", response.data);
         closeModal();
+        window.location.reload();
       } catch (error) {
         console.error("Error creating reservation:", error);
       }
