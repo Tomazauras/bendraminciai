@@ -29,7 +29,7 @@ const User = () => {
         const userId = firebase.auth().currentUser.uid;
         setUserId(userId);
       } else {
-        setLoading(false);
+        //setLoading(false);
       }
     });
 
@@ -47,7 +47,7 @@ const User = () => {
         } catch (error) {
           console.error("Error fetching user:", error);
         } finally {
-          setLoading(false);
+          //setLoading(false);
         }
       }
     };
@@ -64,10 +64,11 @@ const User = () => {
             { params: { userID: userId } } // Use params to pass query parameters
           );
           setPosts(response.data.posts); // Assuming response.data contains the posts array
+          setLoading(false);
         } catch (error) {
           console.error("Error fetching user posts:", error);
         } finally {
-          setLoading(false);
+          //setLoading(false);
         }
       }
     };
