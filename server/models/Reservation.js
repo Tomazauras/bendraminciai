@@ -24,7 +24,7 @@ class Reservation {
     static async getReservationById(reservationId) {
         try {
             const docSnapshot = await firebaseAdmin.firestore().collection("reserved_post").doc(reservationId).get();
-            
+                
             if (!docSnapshot.exists) {
                 return null; // Return null if the reservation doesn't exist
             }
