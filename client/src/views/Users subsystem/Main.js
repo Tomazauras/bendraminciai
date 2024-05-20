@@ -58,8 +58,6 @@ class Main extends Component {
                 // No user is signed in.
                 this.setState({ loggedIn: false, loading: false });
             }
-            
-           
         });
     }
       
@@ -164,6 +162,15 @@ class Main extends Component {
                             Kurti kategorijas
                           </button>
                           )}
+                          {loggedIn && (
+                            <>
+                                <Link to="/profile">
+                                    <button className="button profile">
+                                        Profilis
+                                    </button>
+                                </Link>
+                            </>
+                        )}
                           <button className="button login" onClick={this.showCategoryList}>
                             Rodyti kategorijas
                           </button>
@@ -172,11 +179,13 @@ class Main extends Component {
                             Prisijungti
                           </button>
                       )}
+
                       {!loggedIn && !loading && (
                           <button className="button signup" onClick={this.openRegisterPage}>
                             Registruotis
                           </button>
                       )}
+                      
                       {loggedIn && (
                           <button className="button upload" onClick={this.openUserUploadWindow}>
                             Įkelti skelbimą

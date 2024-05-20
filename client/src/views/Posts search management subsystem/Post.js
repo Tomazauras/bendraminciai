@@ -33,7 +33,7 @@ const Post = () => {
     }, [postId]);
 
     useEffect(() => {
-        const fetchReservedDates = async () => {
+        const getReservations = async () => {
             try {
                 const response = await axios.get(`http://localhost:5000/reservations/post/${postId}`);
                 setReservedDates(response.data);
@@ -42,10 +42,10 @@ const Post = () => {
             }
         };
 
-        fetchReservedDates();
+        getReservations();
     }, [postId]);
 
-    const openModal = () => {
+    const openCalendar = () => {
         console.log("Open modal");
         setShowModal(true);
     };
@@ -94,7 +94,7 @@ const Post = () => {
                 const response = await axios.post('http://localhost:5000/reserve', {
                     startDate,
                     endDate,
-                    reservedCredits: totalPrice, // Use the calculated total price
+                    reservedCredits: totalPrice,
                     fk_userID: userId,
                     fk_postID: postId
                 });
@@ -125,7 +125,7 @@ const Post = () => {
                             <p className="price">Kaina: {post.price}</p>
                             <p className="description">Aprašymas: {post.description}</p>
                         </div>
-                        <button className="reservation-button" onClick={openModal}>Rezervuoti</button>
+                        <button className="reservation-button" onClick={openCalendar}>Rezervuoti</button>
                     </div>
                 ) : (
                     <p>Kraunama..</p>

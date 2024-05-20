@@ -1,30 +1,58 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/storage";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBSc1GHLesciWBHF_-SOXj5vjE5QANY8fI",
+    authDomain: "nuomosklubas.firebaseapp.com",
+    projectId: "nuomosklubas",
+    storageBucket: "nuomosklubas.appspot.com",
+    messagingSenderId: "844422552327",
+    appId: "1:844422552327:web:bf6d8d0484b47d2e7443a2",
+    measurementId: "G-XG3ES1DMDL"
+};
 
 const User = () => {
+    const [userId, setUserId] = useState(null);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [creditAmount, setCreditAmount] = useState(100); // Default amount to append
 
     useEffect(() => {
-        const userId = localStorage.getItem('userId');
+        const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                const userId = firebase.auth().currentUser.uid;
+                setUserId(userId);
+            } else {
+                setLoading(false);
+            }
+        });
 
+        return () => unsubscribe();
+    }, []);
+
+    useEffect(() => {
         const fetchUser = async () => {
-            try {
-                const response = await axios.get(`http://localhost:5000/user/${userId}`);
-                setUser(response.data);
-                setLoading(false);
-            } catch (error) {
-                console.error("Error fetching user:", error);
-                setLoading(false);
+            if (userId) {
+                try {
+                    const response = await axios.get(`http://localhost:5000/user/${userId}`);
+                    setUser(response.data);
+                } catch (error) {
+                    console.error("Error fetching user:", error);
+                } finally {
+                    setLoading(false);
+                }
             }
         };
 
         fetchUser();
-    }, []);
+    }, [userId]);
+
+    
 
     const handleAppendCredits = async () => {
-        const userId = localStorage.getItem('userId');
 
         try {
             const response = await axios.post(`http://localhost:5000/user/${userId}/creditsAdd`, { amount: creditAmount });

@@ -32,7 +32,6 @@ class CategoryController {
                     return;
                 }
             await Post_category.addCategory(pavadinimas, tevoId); 
-            console.log(pavadinimas);
             res.send("Category added");
         } catch (error){
 

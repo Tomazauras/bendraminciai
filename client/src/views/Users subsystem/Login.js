@@ -19,7 +19,6 @@ class Login extends Component {
             email: email,
             password: password
         };
-        
         axios.post('http://localhost:5000/login', postData)
             .then(response => {
                 if (response.data && response.data.redirectTo) {

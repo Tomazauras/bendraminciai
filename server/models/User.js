@@ -142,6 +142,16 @@ class User {
             throw error;
         }
     }
+
+    static async getUserById(userId) {
+        const docSnapshot = await firebaseAdmin.firestore().collection("users").doc(userId).get();
+
+        if (!docSnapshot.exists) {
+            return null;
+        }
+
+        return { id: docSnapshot.id, ...docSnapshot.data() };
+    }
 }
 
 module.exports = User;
