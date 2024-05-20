@@ -1,0 +1,41 @@
+
+
+/* Style for the header */
+.header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Style for the category list */
+.category-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Style for each category item */
+.category-item {
+    margin-bottom: 10px;
+}
+
+/* Style for the link */
+.category-link {
+    text-decoration: none;
+    color: #333; /* Change the color as needed */
+}
+
+/* Style for the category name */
+.category-name {
+    font-size: 18px;
+}
+
+/* Style for the sub-category list */
+.sub-category-list {
+    margin-left: 20px; /* Indent sub-categories */
+}
+
+/* Style for loading indicator */
+.loading {
+    font-style: italic;
+    color: #888; /* Light gray color */
+}
