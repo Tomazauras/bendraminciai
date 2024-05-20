@@ -34,18 +34,20 @@ class Categorys extends Component {
             .map(category => {
                 const hasChildren = categories.some(child => child.tevoId === category.id);
                 return (
-                    <li key={category.id}>
-                        {hasChildren ? (
-                            category.pavadinimas
-                        ) : (
-                            <Link to={`/category/${category.id}`}>{category.pavadinimas}</Link>
-                        )}
-                        {hasChildren && (
-                            <ul>
-                                {this.renderCategories(categories, category.id)}
-                            </ul>
-                        )}
-                    </li>
+                    <div key={category.id} style={{ backgroundColor: "#f0f0f0", padding: "10px", marginBottom: "10px" }}>
+                        <li>
+                            {hasChildren ? (
+                                category.pavadinimas
+                            ) : (
+                                <Link to={`/category/${category.id}`}>{category.pavadinimas}</Link>
+                            )}
+                            {hasChildren && (
+                                <ul>
+                                    {this.renderCategories(categories, category.id)}
+                                </ul>
+                            )}
+                        </li>
+                    </div>
                 );
             });
     };

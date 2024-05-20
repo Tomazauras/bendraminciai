@@ -50,7 +50,6 @@ class UserController {
         try {
             const { id } = req.body; 
             const type = await User.getType(id);
-            console.log(type);
             res.send({ Alldata: type});
         } catch (error) {
 
