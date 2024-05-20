@@ -135,7 +135,7 @@ const User = () => {
             maxWidth: "800px",
           }}
         >
-          {posts.length > 0 ? (
+          {posts != null && posts.length > 0 ? (
             posts.map((post) => (
               <Link
                 to={`/post/${post.id}`}
