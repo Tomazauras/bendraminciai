@@ -98,6 +98,50 @@ class User {
         }
 
     }
+
+    static async appendCredits(userId, amount) {
+        try {
+            const userRef = firebaseAdmin.firestore().collection("users").doc(userId);
+            const docSnapshot = await userRef.get();
+
+            if (!docSnapshot.exists) {
+                throw new Error("User not found");
+            }
+
+            const userData = docSnapshot.data();
+            const currentCredits = userData.credits || 0;
+            const newCredits = currentCredits + amount;
+
+            await userRef.update({ credits: newCredits });
+
+            return newCredits;
+        } catch (error) {
+            console.error("Error updating credits:", error);
+            throw error;
+        }
+    }
+
+    static async subtractCredits(userId, amount) {
+        try {
+            const userRef = firebaseAdmin.firestore().collection("users").doc(userId);
+            const docSnapshot = await userRef.get();
+
+            if (!docSnapshot.exists) {
+                throw new Error("User not found");
+            }
+
+            const userData = docSnapshot.data();
+            const currentCredits = userData.credits || 0;
+            const newCredits = currentCredits - amount;
+
+            await userRef.update({ credits: newCredits });
+
+            return newCredits;
+        } catch (error) {
+            console.error("Error updating credits:", error);
+            throw error;
+        }
+    }
 }
 
 module.exports = User;

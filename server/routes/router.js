@@ -59,6 +59,10 @@ router.route('/reservations/post/:postId').get(reservationController.getReservat
 
 router.route('/user/:userId').get(userController.getUserById)
 
+router.route('/user/:userId/creditsAdd').post(userController.appendCredits)
+
+router.route('/user/:userId/creditsSubtract').post(userController.subtractCredits)
+
 router.route('/userType').post(userController.getUserType)
 
 module.exports = router
