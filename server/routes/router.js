@@ -73,4 +73,8 @@ router.route("/profileOpen").post(userController.navigateToProfile);
 
 router.route("/getPostsByUID").get(postsController.getPostsByUId);
 
+router.route("/getCommentsByPID").get(postsController.getCommentsByPostId);
+
+router.route("/addComment").post(postsController.uploadComment);
+
 module.exports = router;

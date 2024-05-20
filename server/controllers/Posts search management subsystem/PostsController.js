@@ -1,5 +1,6 @@
 const firebaseAdmin = require("../../config/firebase-config");
 const Post = require("../../models/Post");
+const Comment = require("../../models/Comments");
 
 class PostController {
   async open(req, res) {
@@ -66,6 +67,45 @@ class PostController {
     } catch (error) {
       console.error("Error fetching posts by user ID:", error);
       res.status(500).send({ message: "Server error" });
+    }
+  }
+
+  async getCommentsByPostId(req, res) {
+    const postID = req.query.postID; // Retrieve from query parameters
+    try {
+      const comments = await Comment.getCommentsByPostId(postID);
+      if (comments == undefined || comments.length === 0) {
+        // Use comments.length to check if comments are empty
+        return res.send({
+          message: "Post has no comments",
+        });
+      }
+      res.json({ comments });
+    } catch (error) {
+      console.error("Error fetching comments by post ID:", error);
+      res.status(500).send({ message: "Server error" });
+    }
+  }
+
+  async uploadComment(req, res) {
+    const { fk_userID, fk_postID, description, date } = req.body;
+
+    console.log("Description:", description);
+    console.log("autoriaus id:", fk_userID);
+    console.log("post id:", fk_postID);
+
+    try {
+      const userData = {
+        description,
+        fk_userID,
+        fk_postID,
+      };
+
+      const postId = await Post.addPost(userData);
+
+      res.send({ message: "Success", redirectTo: "/" });
+    } catch (error) {
+      console.error(error);
     }
   }
 }

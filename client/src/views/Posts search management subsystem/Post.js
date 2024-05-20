@@ -12,12 +12,15 @@ Modal.setAppElement("#root");
 const Post = () => {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
+  const [comments, setComments] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [reservedDates, setReservedDates] = useState([]);
   const [error, setError] = useState("");
+  const [commentsFetched, setCommentsFetched] = useState(false);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -66,17 +69,73 @@ const Post = () => {
     }
   }, [post]);
 
+  // Fetch user details for each comment
+  useEffect(() => {
+    const fetchCommentorDetails = async () => {
+      try {
+        const updatedComments = await Promise.all(
+          comments.map(async (comment) => {
+            const response = await axios.get(
+              `http://localhost:5000/user/${comment.fk_userID}`
+            );
+            return {
+              ...comment,
+              commentorName: response.data.name,
+              commentorSurname: response.data.surname,
+            };
+          })
+        );
+        setComments(updatedComments);
+      } catch (error) {
+        console.error("Error fetching user details for comments:", error);
+      }
+    };
+
+    if (commentsFetched) {
+      fetchCommentorDetails();
+    }
+  }, [commentsFetched]);
+
+  // Fetch comments for the post
+  useEffect(() => {
+    const fetchPostComments = async () => {
+      if (postId) {
+        try {
+          const response = await axios.get(
+            `http://localhost:5000/getCommentsByPID`,
+            { params: { postID: postId } }
+          );
+          setComments(response.data.comments);
+          setCommentsFetched(true);
+        } catch (error) {
+          console.error("Error fetching comments:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchPostComments();
+  }, [postId]);
+
+  // Ensure date is properly formatted
+  const formatDate = (timestamp) => {
+    if (!timestamp) return "Invalid Date";
+    const date = new Date(timestamp._seconds * 1000); // Assuming timestamp._seconds is in seconds
+    return date.toLocaleDateString();
+  };
+
+  const postComment = () => {};
+
   const openCalendar = () => {
     console.log("Open modal");
     setShowModal(true);
-    
   };
 
   const closeModal = () => {
     console.log("Close modal");
     setShowModal(false);
     setError("");
-  
   };
 
   const handleDateChange = (dates) => {
@@ -167,11 +226,40 @@ const Post = () => {
             <button className="reservation-button" onClick={openCalendar}>
               Rezervuoti
             </button>
+            <form className="comment-form">
+              <label htmlFor="comment">Palikti komentara:</label>
+              <textarea
+                id="comment"
+                name="comment"
+                rows="4"
+                cols="50"
+              ></textarea>
+            </form>
+            <button onClick={postComment}>Pasidalinti</button>
+            {/* Comment Section */}
+            <div className="comment-section">
+              <h4>Komentarai</h4>
+              {comments && comments.length > 0 ? (
+                comments.map((comment) => (
+                  <p>
+                    {formatDate(comment.date)}{" "}
+                    <strong>
+                      {comment.commentorName} {comment.commentorSurname}{" "}
+                    </strong>{" "}
+                    : {comment.description}
+                  </p>
+                ))
+              ) : (
+                <p>Nėra komentarų</p>
+              )}
+              {/* Comment Form */}
+            </div>
           </div>
         ) : (
           <p>Kraunama..</p>
         )}
       </div>
+
       <Modal
         isOpen={showModal}
         onRequestClose={closeModal}
