@@ -56,6 +56,10 @@ class UserController {
       res.send({ Alldata: type });
     } catch (error) {}
   }
+
+  async navigateToProfile(req, res) {
+    res.send({ redirectTo: "/profile" });
+  }
 }
 
 module.exports = UserController;

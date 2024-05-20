@@ -159,6 +159,36 @@ class Post {
       return { categoryName, posts };
     } catch (error) {}
   }
+
+  static async getPostsByUId(uid) {
+    try {
+      const snapshot = await firebaseAdmin
+        .firestore()
+        .collection("posts")
+        .where("fk_userID", "==", uid)
+        .get();
+
+      const posts = await Promise.all(
+        snapshot.docs.map(async (doc) => {
+          const postData = doc.data();
+          const docSnapshot = await firebaseAdmin
+            .firestore()
+            .collection("posts_images")
+            .doc(postData.urlId)
+            .get();
+          const url = docSnapshot.data().url; // Assuming 'url' is the field containing the storage file URL
+          const imageUrl = await firebaseAdmin
+            .storage()
+            .bucket()
+            .file(url)
+            .getSignedUrl({ action: "read", expires: "01-01-2025" });
+          return { id: doc.id, ...postData, imageUrl };
+        })
+      );
+
+      return { posts };
+    } catch (error) {}
+  }
 }
 
 module.exports = Post;

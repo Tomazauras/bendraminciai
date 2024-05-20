@@ -52,8 +52,8 @@ class Main extends Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         const userId = firebase.auth().currentUser.uid;
-        console.log(userId);
         this.getCurrentUserType(userId);
+        localStorage.setItem("userId", userId);
         // User is signed in.
         this.setState({ userId, loggedIn: true, loading: false });
       } else {
@@ -90,6 +90,18 @@ class Main extends Component {
   openLoginPage() {
     axios
       .post("http://localhost:5000/loginOpen")
+      .then((response) => {
+        // Redirect to the signup view URL received from the server
+        window.location.href = response.data.redirectTo;
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
+  openProfilePage() {
+    axios
+      .post("http://localhost:5000/profileOpen")
       .then((response) => {
         // Redirect to the signup view URL received from the server
         window.location.href = response.data.redirectTo;
@@ -217,9 +229,14 @@ class Main extends Component {
             )}
             {loggedIn && (
               <>
-                <Link to="/profile">
-                  <button className="button profile">Profilis</button>
-                </Link>
+                {/* <Link to="/profile"> */}
+                <button
+                  className="button profile"
+                  onClick={this.openProfilePage}
+                >
+                  Profilis
+                </button>
+                {/* </Link> */}
               </>
             )}
             <button className="button login" onClick={this.showCategoryList}>
